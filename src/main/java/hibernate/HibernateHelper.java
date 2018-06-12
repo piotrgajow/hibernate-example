@@ -1,5 +1,6 @@
 package hibernate;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -16,6 +17,10 @@ public class HibernateHelper {
 
     public static void closeSessionFactory() {
         sessionFactory.close();
+    }
+
+    public static Session openSession() {
+        return sessionFactory.openSession();
     }
 
 }
