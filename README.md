@@ -1,2 +1,4 @@
 # hibernate-example
-Project showing basic features of hibernate
+
+Project showing basic features of hibernate.
+Projekt pokazuj
