@@ -20,6 +20,9 @@ public class Book {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "has_hard_cover")
+    private Boolean hasHardCover;
+
     @Column(name = "number_of_pages")
     private Integer numberOfPages;
 
@@ -45,6 +48,14 @@ public class Book {
         this.title = title;
     }
 
+    public Boolean getHasHardCover() {
+        return hasHardCover;
+    }
+
+    public void setHasHardCover(Boolean hasHardCover) {
+        this.hasHardCover = hasHardCover;
+    }
+
     public Integer getNumberOfPages() {
         return numberOfPages;
     }
@@ -59,6 +70,17 @@ public class Book {
 
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", hasHardCover=" + hasHardCover +
+                ", numberOfPages=" + numberOfPages +
+                ", releaseDate=" + releaseDate +
+                '}';
     }
 
 }
