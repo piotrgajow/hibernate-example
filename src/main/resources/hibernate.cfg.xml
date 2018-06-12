@@ -8,5 +8,7 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate_example?serverTimezone=UTC&amp;useSSL=false</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password"/>
+
+        <mapping class="hibernate.entities.Book"/>
     </session-factory>
 </hibernate-configuration>
