@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
@@ -28,6 +30,18 @@ public class Book {
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
+
+    @OneToOne
+    @JoinColumn(name = "author_id")
+    private Author mainAuthor;
+
+    public Author getMainAuthor() {
+        return mainAuthor;
+    }
+
+    public void setMainAuthor(Author mainAuthor) {
+        this.mainAuthor = mainAuthor;
+    }
 
     public Book() {
     }
@@ -80,6 +94,7 @@ public class Book {
                 ", hasHardCover=" + hasHardCover +
                 ", numberOfPages=" + numberOfPages +
                 ", releaseDate=" + releaseDate +
+                ", mainAuthorId=" + mainAuthor.getId() +
                 '}';
     }
 
