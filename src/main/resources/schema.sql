@@ -31,4 +31,5 @@ INSERT INTO books
         (title, number_of_pages, has_hard_cover, release_date, author_id)
     VALUES
         ('Hibernate: A Developers Notebook', 192, b'1', '2004-05-20', 1),
-        ('Just Hibernate', 140, b'0', '2014-06-10', 2);
+        ('Just Hibernate', 140, b'0', '2014-06-10', 2),
+        ('Whats new in Java 7', 19, b'0', '2011-10-20', 2);

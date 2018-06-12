@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "authors")
@@ -23,8 +25,8 @@ public class Author {
     @Column(name = "surname")
     private String surname;
 
-    @OneToOne(mappedBy = "mainAuthor")
-    private Book firstBook;
+    @OneToMany(mappedBy = "mainAuthor")
+    private List<Book>books;
 
     public Author() {
     }
@@ -53,21 +55,22 @@ public class Author {
         this.surname = surname;
     }
 
-    public Book getFirstBook() {
-        return firstBook;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setFirstBook(Book firstBook) {
-        this.firstBook = firstBook;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override
     public String toString() {
+        List<String> bookIds = books.stream().map(book -> book.getId().toString()).collect(Collectors.toList());
         return "Author{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", firstBookId=" + firstBook.getId() +
+                ", bookIds=" + String.join(",", bookIds) +
                 '}';
     }
 }

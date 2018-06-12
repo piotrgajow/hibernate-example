@@ -3,7 +3,6 @@ import hibernate.entities.Author;
 import hibernate.entities.Book;
 import org.hibernate.Session;
 
-
 public class Main {
 
     public static void main(String[] args) {
@@ -18,9 +17,9 @@ public class Main {
         System.out.println("\n");
 
         Author author = session.get(Author.class, 2L);
-        System.out.println("Author 2 and his first book");
+        System.out.println("Author 2 and all of his books");
         System.out.println(author);
-        System.out.println(author.getFirstBook());
+        author.getBooks().forEach(System.out::println);
         System.out.println("\n");
 
         session.close();
