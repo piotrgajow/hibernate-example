@@ -6,9 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
@@ -31,17 +34,13 @@ public class Book {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author mainAuthor;
-
-    public Author getMainAuthor() {
-        return mainAuthor;
-    }
-
-    public void setMainAuthor(Author mainAuthor) {
-        this.mainAuthor = mainAuthor;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "books_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> authors;
 
     public Book() {
     }
@@ -86,15 +85,24 @@ public class Book {
         this.releaseDate = releaseDate;
     }
 
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
     @Override
     public String toString() {
+        List<String> authorIds = authors.stream().map(author -> author.getId().toString()).collect(Collectors.toList());
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", hasHardCover=" + hasHardCover +
                 ", numberOfPages=" + numberOfPages +
                 ", releaseDate=" + releaseDate +
-                ", mainAuthorId=" + mainAuthor.getId() +
+                ", authorIds=" + String.join(",", authorIds) +
                 '}';
     }
 

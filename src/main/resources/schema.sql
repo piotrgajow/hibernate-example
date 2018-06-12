@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS books_authors;
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS authors;
 
@@ -15,9 +16,17 @@ CREATE TABLE books (
     number_of_pages INT,
     has_hard_cover BIT(1),
     release_date DATE,
+
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE books_authors (
+    id BIGINT AUTO_INCREMENT,
+    book_id BIGINT NOT NULL,
     author_id BIGINT NOT NULL,
 
-    PRIMARY KEY(id),
+    PRIMARY KEY (id),
+    FOREIGN KEY (book_id) REFERENCES books (id),
     FOREIGN KEY (author_id) REFERENCES authors (id)
 );
 
@@ -25,11 +34,24 @@ INSERT INTO authors
         (id, name, surname)
     VALUES
         (1, 'James', 'Elliott'),
-        (2, 'Madhusudhan', 'Konda');
+        (2, 'Madhusudhan', 'Konda'),
+        (3, 'Timothy', 'Obrian'),
+        (4, 'Ryan', 'Fowler');
 
 INSERT INTO books
-        (title, number_of_pages, has_hard_cover, release_date, author_id)
+        (id, title, number_of_pages, has_hard_cover, release_date)
     VALUES
-        ('Hibernate: A Developers Notebook', 192, b'1', '2004-05-20', 1),
-        ('Just Hibernate', 140, b'0', '2014-06-10', 2),
-        ('Whats new in Java 7', 19, b'0', '2011-10-20', 2);
+        (1, 'Hibernate: A Developers Notebook', 192, b'1', '2004-05-20'),
+        (2, 'Just Hibernate', 140, b'0', '2014-06-10'),
+        (3, 'Whats new in Java 7', 19, b'0', '2011-10-20'),
+        (4, 'Harnessing Hibernate', 382, b'1', '2008-05-02');
+
+INSERT INTO books_authors
+        (book_id, author_id)
+    VALUES
+        (1, 1),
+        (2, 2),
+        (3, 2),
+        (4, 2),
+        (4, 1),
+        (4, 3);

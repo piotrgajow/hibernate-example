@@ -10,10 +10,10 @@ public class Main {
 
         Session session = HibernateHelper.openSession();
 
-        Book book = session.get(Book.class, 1L);
-        System.out.println("Book 1 and its main author");
+        Book book = session.get(Book.class, 4L);
+        System.out.println("Book 4 and all of its authors");
         System.out.println(book);
-        System.out.println(book.getMainAuthor());
+        book.getAuthors().forEach(System.out::println);
         System.out.println("\n");
 
         Author author = session.get(Author.class, 2L);
