@@ -10,16 +10,16 @@ public class Main {
 
         Session session = HibernateHelper.openSession();
 
-        Book book = session.get(Book.class, 4L);
-        System.out.println("Book 4 and all of its authors");
-        System.out.println(book);
-        book.getAuthors().forEach(System.out::println);
+        System.out.println("Get book with all dependencies eagerly");
+        Book book = session.get(Book.class, 1L);
+        System.out.println(book.getTitle());
+        System.out.println(book.getAuthors().get(0).getSurname());
         System.out.println("\n");
 
-        Author author = session.get(Author.class, 2L);
-        System.out.println("Author 2 and all of his books");
-        System.out.println(author);
-        author.getBooks().forEach(System.out::println);
+        System.out.println("Get author");
+        Author author = session.get(Author.class, 3L);
+        System.out.println(author.getSurname());
+        System.out.println(author.getBooks().get(0).getTitle());
         System.out.println("\n");
 
         session.close();
