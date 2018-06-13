@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS books_authors;
-DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS authors;
+DROP DATABASE IF EXISTS hibernate_example;
+CREATE DATABASE hibernate_example;
+USE hibernate_example;
 
 CREATE TABLE authors (
     id BIGINT AUTO_INCREMENT,
