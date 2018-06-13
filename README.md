@@ -27,5 +27,18 @@ Relacja wiele do jednego na przykładzie książki i autora (zakładając, że k
 ### Branch: [relation/many-to-many](https://github.com/piotrgajow/hibernate-example/tree/relation/many-to-many)
 Relacja wiele do wielu na przykładzie książki i autora (zakładając, że książka może mieć wielu autorów, a autor może mieć wiele książek). Odpowniednie mapowanie `@ManyToMany` w klasach `Book.java` i `Author.java` oraz przykład pobierania danych.
 
+## Konfiguracja
+Do pliku `hibernate.cfg.xml` można dodać więcej parametrów
+
+- `hibernate.show_sql` - ustawia logowanie wysyłanych zapytań do bazy danych
+    - `true` - włączone
+    - `false` - wyłączone
+    
+- `hibernate.hbm2ddl.auto` - konfiguruje generowanie schematu bazy danych na podstawie mapowań
+    - `validate` - waliduje zgodność bazy danych z mapowaniami
+    - `update` - aktualizuje bazę
+    - `create` - Usuwa istniejącą bazę i tworzy ją od nowa
+    - `create-drop` - Jak przy `create`, ale dodatkowo usuwa bazę w momencie zamknięcia `SessionFactory`
+
 ## Uwagi
 W przypadku pytań bądź uwag polecam zgłaszanie ich przy pomocy mechanizmu [GitHub issues](https://github.com/piotrgajow/hibernate-example/issues/new)
