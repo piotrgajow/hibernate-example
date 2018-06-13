@@ -1,4 +1,6 @@
-DROP TABLE IF EXISTS books;
+DROP DATABASE IF EXISTS hibernate_example;
+CREATE DATABASE hibernate_example;
+USE hibernate_example;
 
 CREATE TABLE books (
     id BIGINT AUTO_INCREMENT,
