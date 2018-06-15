@@ -25,7 +25,10 @@ public class EBook extends Book {
     @Override
     public String toString() {
         return "EBook{" +
-                "sizeKB=" + sizeKB +
+                "id=" + getId() +
+                ", title='" + getTitle() + '\'' +
+                ", releaseDate=" + getReleaseDate() +
+                ", sizeKB=" + sizeKB +
                 '}';
     }
 
