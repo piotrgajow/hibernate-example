@@ -5,11 +5,14 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.exception.RevisionDoesNotExistException;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public class Main {
+
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 
     public static void main(String[] args) {
         HibernateHelper.prepareSessionFactory();
@@ -18,13 +21,12 @@ public class Main {
 
         Book book = createBook(session);
         Date date = new Date();
-        wait(2);
+        wait(3);
         updateBook(book, session);
 
         showBookHistory(book, session);
 
         Date yesterday = new Date(date.getTime() - 24*60*60*1000);
-
         showBookAtDate(book, date, session);
         showBookAtDate(book, new Date(), session);
         showBookAtDate(book, yesterday, session);
@@ -82,10 +84,15 @@ public class Main {
 
         try {
             Book bookRevision = auditReader.find(Book.class, book.getId(), date);
+            System.out.println("Revision for date " + formatDate(date));
             System.out.println(bookRevision);
         } catch (RevisionDoesNotExistException e) {
-            System.out.println("No book revision found for date " + date);
+            System.out.println("No book revision found for date " + formatDate(date));
         }
+    }
+
+    private static String formatDate(Date date) {
+        return SIMPLE_DATE_FORMAT.format(date);
     }
 
 }
