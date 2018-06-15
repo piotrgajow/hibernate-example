@@ -29,11 +29,6 @@ public class Main {
         session.persist(paperBook);
         session.getTransaction().commit();
 
-        System.out.println("Books: ");
-        session.createQuery("from Book", Book.class)
-                .list()
-                .forEach(System.out::println);
-
         System.out.println("Paper books: ");
         session.createQuery("from PaperBook ", PaperBook.class)
                 .list()
@@ -41,6 +36,11 @@ public class Main {
 
         System.out.println("E-books: ");
         session.createQuery("from EBook", EBook.class)
+                .list()
+                .forEach(System.out::println);
+
+        System.out.println("Books: ");
+        session.createQuery("from Book", Book.class)
                 .list()
                 .forEach(System.out::println);
 
