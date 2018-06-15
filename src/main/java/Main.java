@@ -3,8 +3,11 @@ import hibernate.entities.Book;
 import org.hibernate.Session;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.exception.RevisionDoesNotExistException;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +24,12 @@ public class Main {
         updateBook(book, session);
 
         showBookHistory(book, session);
+
+        Date yesterday = new Date(date.getTime() - 24*60*60*1000);
+        
         showBookAtDate(book, date, session);
+        showBookAtDate(book, new Date(), session);
+        showBookAtDate(book, yesterday, session);
 
         session.close();
 
@@ -74,8 +82,12 @@ public class Main {
     private static void showBookAtDate(Book book, Date date, Session session) {
         AuditReader auditReader = AuditReaderFactory.get(session);
 
-        Book bookRevision = auditReader.find(Book.class, book.getId(), date);
-        System.out.println(bookRevision);
+        try {
+            Book bookRevision = auditReader.find(Book.class, book.getId(), date);
+            System.out.println(bookRevision);
+        } catch (RevisionDoesNotExistException e) {
+            System.out.println("No book revision found for date " + date);
+        }
     }
 
 }
