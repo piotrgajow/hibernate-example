@@ -1,9 +1,10 @@
 import hibernate.HibernateHelper;
 import hibernate.entities.Book;
-import hibernate.examples.EntityManipulationExamples;
 import org.hibernate.Session;
 
+import javax.persistence.OptimisticLockException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -12,46 +13,26 @@ public class Main {
 
         Session session = HibernateHelper.openSession();
 
-        Book book;
-        List<Book> books;
+        Scanner scanner = new Scanner(System.in);
 
-        EntityManipulationExamples examples = new EntityManipulationExamples(session);
+        Book book = session.get(Book.class, 1L);
+        System.out.println("Książka 1 ma tytuł: " + book.getTitle());
+        System.out.print("Podaj nowy tytuł: ");
+        book.setTitle(scanner.nextLine());
 
-        book = examples.findBookById(1L);
-        displayResult("Book of id 1", book);
+        System.out.println("Wpisz coś żeby potwierdzić.");
+        scanner.nextLine();
 
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        books = examples.findBooksByPageCountGraterThan150();
-        displayResult("Books with more than 150 pages", books);
-
-        books = examples.findBooksByParametrizedPageCount(100);
-        displayResult("Books with more than 100 pages", books);
-
-        book = examples.createNewBook();
-        displayResult("Newly created book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        book = examples.updateExistingBook(book);
-        displayResult("Updated book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        book = examples.replaceExistingBook(book.getId());
-        displayResult("Replaced book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        examples.deleteBook(book.getId());
-        System.out.println("Deleting book " + book.getId());
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
+        try {
+            session.beginTransaction();
+            session.merge(book);
+            session.getTransaction().commit();
+            System.out.println("Zapisano zmianę");
+        } catch(OptimisticLockException e) {
+            System.out.println("Nie udało się zapisać zmiany. Ktoś w międzyczasie zmienił już tytuł książki");
+            System.out.println(book.getTitle());
+            System.out.println("Aktualny tytuł to: " + book.getTitle());
+        }
 
         session.close();
 

@@ -8,6 +8,7 @@ CREATE TABLE books (
     number_of_pages INT,
     has_hard_cover BIT(1),
     release_date DATE,
+    version BIGINT DEFAULT 1,
 
     PRIMARY KEY(id)
 );

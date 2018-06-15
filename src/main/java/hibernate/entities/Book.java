@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.time.LocalDate;
 
 @Entity
@@ -28,6 +29,9 @@ public class Book {
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
+
+    @Version
+    private Long version;
 
     public Book() {
     }
@@ -72,6 +76,14 @@ public class Book {
         this.releaseDate = releaseDate;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -80,6 +92,7 @@ public class Book {
                 ", hasHardCover=" + hasHardCover +
                 ", numberOfPages=" + numberOfPages +
                 ", releaseDate=" + releaseDate +
+                ", version=" + version +
                 '}';
     }
 
