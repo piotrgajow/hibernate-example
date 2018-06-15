@@ -23,6 +23,11 @@ public class Main {
         System.out.println("After load");
         System.out.println(book);
 
+        System.out.println("Before get");
+        book = session.load(Book.class, 2L);
+        System.out.println("After get");
+        System.out.println(book);
+
         session.close();
 
         HibernateHelper.closeSessionFactory();
