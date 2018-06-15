@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "books")
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public class Book {
+public abstract class Book {
 
     @Id
     @Column(name = "id")
