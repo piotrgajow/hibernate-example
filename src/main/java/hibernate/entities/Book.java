@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "books")
-public class Book {
+public abstract class Book {
 
     @Id
     @Column(name = "id")
