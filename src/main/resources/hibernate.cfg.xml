@@ -9,6 +9,9 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password"/>
 
-        <mapping class="hibernate.entities.Book"/>
+        <property name="hbm2ddl.auto">create</property>
+
+        <mapping class="hibernate.entities.EBook"/>
+        <mapping class="hibernate.entities.PaperBook"/>
     </session-factory>
 </hibernate-configuration>

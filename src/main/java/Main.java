@@ -1,9 +1,10 @@
 import hibernate.HibernateHelper;
 import hibernate.entities.Book;
-import hibernate.examples.EntityManipulationExamples;
+import hibernate.entities.EBook;
+import hibernate.entities.PaperBook;
 import org.hibernate.Session;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public class Main {
 
@@ -12,62 +13,25 @@ public class Main {
 
         Session session = HibernateHelper.openSession();
 
-        Book book;
-        List<Book> books;
+        EBook ebook = new EBook();
+        ebook.setTitle("Just Hibernate");
+        ebook.setReleaseDate(LocalDate.of(2014, 6, 10));
+        ebook.setSizeKB(615);
 
-        EntityManipulationExamples examples = new EntityManipulationExamples(session);
+        PaperBook paperBook = new PaperBook();
+        paperBook.setTitle("Hibernate: A Developers Notebook");
+        paperBook.setReleaseDate(LocalDate.of(2004, 5, 20));
+        paperBook.setHasHardCover(true);
+        paperBook.setNumberOfPages(192);
 
-        book = examples.findBookById(1L);
-        displayResult("Book of id 1", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        books = examples.findBooksByPageCountGraterThan150();
-        displayResult("Books with more than 150 pages", books);
-
-        books = examples.findBooksByParametrizedPageCount(100);
-        displayResult("Books with more than 100 pages", books);
-
-        book = examples.createNewBook();
-        displayResult("Newly created book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        book = examples.updateExistingBook(book);
-        displayResult("Updated book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        book = examples.replaceExistingBook(book.getId());
-        displayResult("Replaced book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        examples.deleteBook(book.getId());
-        System.out.println("Deleting book " + book.getId());
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
+        session.beginTransaction();
+        session.persist(ebook);
+        session.persist(paperBook);
+        session.getTransaction().commit();
 
         session.close();
 
         HibernateHelper.closeSessionFactory();
-    }
-
-    private static void displayResult(String label, Book book) {
-        System.out.println(label);
-        System.out.println(book);
-        System.out.println("\n");
-    }
-
-    private static void displayResult(String label, List<Book> books) {
-        System.out.println(label);
-        books.forEach(System.out::println);
-        System.out.println("\n");
     }
 
 }

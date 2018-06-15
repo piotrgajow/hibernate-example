@@ -1,15 +1,12 @@
 package hibernate.entities;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import java.time.LocalDate;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-@Table(name = "books")
+@MappedSuperclass
 public class Book {
 
     @Id
@@ -19,12 +16,6 @@ public class Book {
 
     @Column(name = "title")
     private String title;
-
-    @Column(name = "has_hard_cover")
-    private Boolean hasHardCover;
-
-    @Column(name = "number_of_pages")
-    private Integer numberOfPages;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
@@ -48,22 +39,6 @@ public class Book {
         this.title = title;
     }
 
-    public Boolean getHasHardCover() {
-        return hasHardCover;
-    }
-
-    public void setHasHardCover(Boolean hasHardCover) {
-        this.hasHardCover = hasHardCover;
-    }
-
-    public Integer getNumberOfPages() {
-        return numberOfPages;
-    }
-
-    public void setNumberOfPages(Integer numberOfPages) {
-        this.numberOfPages = numberOfPages;
-    }
-
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
@@ -77,8 +52,6 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", hasHardCover=" + hasHardCover +
-                ", numberOfPages=" + numberOfPages +
                 ", releaseDate=" + releaseDate +
                 '}';
     }
