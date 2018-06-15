@@ -1,6 +1,7 @@
 package hibernate.entities;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "paper_books")
+@DiscriminatorValue("paper")
 public class PaperBook extends Book {
 
     @Column(name = "has_hard_cover")

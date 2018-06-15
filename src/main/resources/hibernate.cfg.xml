@@ -11,6 +11,7 @@
 
         <property name="hbm2ddl.auto">create</property>
 
+        <mapping class="hibernate.entities.Book"/>
         <mapping class="hibernate.entities.EBook"/>
         <mapping class="hibernate.entities.PaperBook"/>
     </session-factory>
