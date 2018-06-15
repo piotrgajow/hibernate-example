@@ -1,7 +1,6 @@
 package hibernate.entities;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -28,7 +27,10 @@ public class EBook extends Book {
     @Override
     public String toString() {
         return "EBook{" +
-                "sizeKB=" + sizeKB +
+                "id=" + getId() +
+                ", title='" + getTitle() + '\'' +
+                ", releaseDate=" + getReleaseDate() +
+                ", sizeKB=" + sizeKB +
                 '}';
     }
 
