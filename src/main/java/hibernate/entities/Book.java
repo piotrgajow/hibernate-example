@@ -1,5 +1,8 @@
 package hibernate.entities;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +13,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "books")
+@Audited
+@AuditTable("book_history")
 public class Book {
 
     @Id

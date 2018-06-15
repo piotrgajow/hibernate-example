@@ -1,8 +1,11 @@
 import hibernate.HibernateHelper;
 import hibernate.entities.Book;
-import hibernate.examples.EntityManipulationExamples;
 import org.hibernate.Session;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -12,62 +15,67 @@ public class Main {
 
         Session session = HibernateHelper.openSession();
 
-        Book book;
-        List<Book> books;
+        Book book = createBook(session);
+        Date date = new Date();
+        wait(2);
+        updateBook(book, session);
 
-        EntityManipulationExamples examples = new EntityManipulationExamples(session);
-
-        book = examples.findBookById(1L);
-        displayResult("Book of id 1", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        books = examples.findBooksByPageCountGraterThan150();
-        displayResult("Books with more than 150 pages", books);
-
-        books = examples.findBooksByParametrizedPageCount(100);
-        displayResult("Books with more than 100 pages", books);
-
-        book = examples.createNewBook();
-        displayResult("Newly created book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        book = examples.updateExistingBook(book);
-        displayResult("Updated book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        book = examples.replaceExistingBook(book.getId());
-        displayResult("Replaced book", book);
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
-
-        examples.deleteBook(book.getId());
-        System.out.println("Deleting book " + book.getId());
-
-        books = examples.findAllBooks();
-        displayResult("All books", books);
+        showBookHistory(book, session);
+        showBookAtDate(book, date, session);
 
         session.close();
 
         HibernateHelper.closeSessionFactory();
     }
 
-    private static void displayResult(String label, Book book) {
-        System.out.println(label);
-        System.out.println(book);
-        System.out.println("\n");
+    private static Book createBook(Session session) {
+        Book book = new Book();
+        book.setTitle("Hibernate: A Developers Notebook");
+        book.setReleaseDate(LocalDate.of(2004, 5, 20));
+        book.setHasHardCover(true);
+        book.setNumberOfPages(192);
+
+        session.beginTransaction();
+        session.persist(book);
+        session.getTransaction().commit();
+
+        return book;
     }
 
-    private static void displayResult(String label, List<Book> books) {
-        System.out.println(label);
-        books.forEach(System.out::println);
-        System.out.println("\n");
+    private static void wait(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void updateBook(Book book, Session session) {
+        book.setTitle("Just Hibernate");
+        book.setReleaseDate(LocalDate.of(2014, 6, 10));
+        book.setHasHardCover(false);
+        book.setNumberOfPages(140);
+
+        session.beginTransaction();
+        session.merge(book);
+        session.getTransaction().commit();
+    }
+
+    private static void showBookHistory(Book book, Session session) {
+        AuditReader auditReader = AuditReaderFactory.get(session);
+        List<Number> revisionNumbers = auditReader.getRevisions(Book.class, book.getId());
+        revisionNumbers.forEach(revisionNumber -> {
+            Book bookRevision = auditReader.find(Book.class, book.getId(), revisionNumber);
+            System.out.println("Revision " + revisionNumber);
+            System.out.println(bookRevision);
+        });
+    }
+
+    private static void showBookAtDate(Book book, Date date, Session session) {
+        AuditReader auditReader = AuditReaderFactory.get(session);
+
+        Book bookRevision = auditReader.find(Book.class, book.getId(), date);
+        System.out.println(bookRevision);
     }
 
 }
