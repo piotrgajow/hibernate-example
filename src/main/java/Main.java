@@ -6,8 +6,6 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.exception.RevisionDoesNotExistException;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class Main {
         showBookHistory(book, session);
 
         Date yesterday = new Date(date.getTime() - 24*60*60*1000);
-        
+
         showBookAtDate(book, date, session);
         showBookAtDate(book, new Date(), session);
         showBookAtDate(book, yesterday, session);
