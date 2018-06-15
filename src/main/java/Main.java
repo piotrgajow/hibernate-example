@@ -29,6 +29,10 @@ public class Main {
         session.persist(paperBook);
         session.getTransaction().commit();
 
+        session.createQuery("from Book", Book.class)
+                .list()
+                .forEach(System.out::println);
+
         session.close();
 
         HibernateHelper.closeSessionFactory();

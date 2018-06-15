@@ -9,13 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@DiscriminatorValue("paper")
+@Table(name = "paper_books")
+@PrimaryKeyJoinColumn(name = "book_id")
 public class PaperBook extends Book {
 
     @Column(name = "has_hard_cover")

@@ -13,9 +13,8 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "books")
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public class Book {
 
     @Id
